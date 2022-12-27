@@ -33,9 +33,6 @@ function formatResponse({ years, months, totalDays }) {
 //    getMonth(date)
 //}
 
-// leapYear => year % 4 === 0
-
-// Receive string of dates one after each other
 function outputDate(dates) {
 
     let firstDate = Date.parse(normalizeDate(dates[0])),
@@ -43,11 +40,17 @@ function outputDate(dates) {
 
         deltaDatesInMilliseconds = Math.abs(firstDate - secondDate),
 
-        years = Math.floor(deltaDatesInMilliseconds / MILLISECONDS_IN_YEAR),
-        months = Math.floor(deltaDatesInMilliseconds / MILLISECONDS_IN_MONTH) % 12,
         // IMPROVEMENT: pass the two dates to a function monthDifference
         // months = monthDifference(date1, date2),
-        totalDays = parseInt(deltaDatesInMilliseconds / MILLISECONDS_IN_DAY)
+        months = Math.floor(deltaDatesInMilliseconds / MILLISECONDS_IN_MONTH) % 12,
+
+        // IMPROVEMENT: count the total of days in every month, considering that in 
+        // leap years february has 29 days
+        // leapYear => year % 4 === 0
+        totalDays = parseInt(deltaDatesInMilliseconds / MILLISECONDS_IN_DAY),
+
+        // IMPROVEMENT: the number of days in a year depends on if is leap
+        years = Math.floor(deltaDatesInMilliseconds / MILLISECONDS_IN_YEAR)
 
     return formatResponse({ years: years, months: months, totalDays: totalDays })
 
